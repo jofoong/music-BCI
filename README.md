@@ -15,3 +15,4 @@ Each line in SuperCollider is run line by line, or in blocks encased by parenthe
 ##### OpenBCI GUI
 In the /old directory, it contains an implemented W_ProminentFrequency.pde for visualising the current frequency that is most prominent. Original code for the OpenBCI GUI is from  https://github.com/OpenBCI/OpenBCI_GUI, and requires [Processing](https://docs.openbci.com/docs/06Software/01-OpenBCISoftware/GUIDocs) to run as a sketch.
 <img src="old/prom-freq.png" height="400">
+Demonstrating prominent frequency
