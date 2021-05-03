@@ -18,7 +18,6 @@ import scipy.signal
 import pywt
 
 WAVELET = "db6"
-FREQ_TYPES = 5 # for the five frequency types: alpha, beta, gamma, delta, theta
 
 def matrix_from_csv_file(file_path):
     """
@@ -41,10 +40,9 @@ def matrix_from_csv_file(file_path):
     print(full_matrix.shape)
     return full_matrix
 
+"""
 def matrix_from_bci_file(file_path):
-    """
-	Returns the data matrix given the path of a CSV BCI file.
-	"""
+	# Returns the data matrix given the path of a CSV BCI file.
     # Read in the file, omitting the first six lines.
     csv_data = np.genfromtxt(file_path, delimiter=',', skip_header=6, usecols=(1,2,3,4,22))
 
@@ -52,6 +50,7 @@ def matrix_from_bci_file(file_path):
     i = [4,0,1,2,3]
     full_matrix = csv_data[:,i]
     return full_matrix
+"""
 
 def get_time_slice(full_matrix, period, start=0.):
     """
@@ -79,14 +78,18 @@ def get_time_slice(full_matrix, period, start=0.):
     return full_matrix[index_0:index_1, :], duration
 
 
-"""The EEG data at this point has not been pre-processed. Instead, I chose to extract 7 features per epoch (1 second). The features are subclassed as Wavelet-based features (4) and time-domain features (3).
+"""
+The EEG data at this point has not been pre-processed. 
+Instead, I chose to extract selected features per epoch (1 second). 
+The features are subclassed as Wavelet-based features (4) and time-domain features (3).
 
 *   Mean
 *   Standard deviation
+*   Minimum, maximum
+*   Covariance matrix
 Wavelet transform:
 *   Energy
 *   Entropy
-
 
 Time-domain (Hjorth parameters):
 *   Ability 
@@ -132,7 +135,6 @@ def feature_stddev(matrix):
 		Revision and documentation: [fcampelo]
 	"""
 
-    # fix ddof for finite sampling correction (N-1 instead of N in denominator)
     ret = np.std(matrix, axis=0, ddof=1).flatten()
     names = ['std_' + str(i) for i in range(matrix.shape[1])]
 
@@ -483,7 +485,6 @@ def feature_energy(matrix):
         Returns:
             ret: 1D ndarray of calculated energy by column.
             names: list containing feature names for the energies calculated.
-        #ret = np.std(matrix, axis=0, ddof=1).flatten()
     """
     ret = []
     for col in matrix.T:
@@ -533,15 +534,15 @@ def feature_activity(matrix):
 
 def calc_der(col, timestamps):
     """
-    Calculates the derivative for each data point given a matrix.
+        Calculates the derivative for each data point given a matrix.
 
-    Parameters
-    ----------
-    col: 1D ndarray containing the channel's values
-    timestamps: 1D ndarray of timestamps
-    Returns
-    -------
-    ret: 1D ndarray of derivatives
+        Parameters
+        ----------
+        col: 1D ndarray containing the channel's values
+        timestamps: 1D ndarray of timestamps
+        Returns
+        -------
+        ret: 1D ndarray of derivatives
     """
     ret = []
     for i in range(col.shape[0]):

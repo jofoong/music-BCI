@@ -4,25 +4,10 @@ a = 0.5;
 l = 0;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 s.boot;
 (
 //open FuncStream
-p = "C:/Users/Jolene/Desktop/school/project/BCI_project/sc-input.txt";
+p = "sc-input.txt";
 f = File(p,"r");
 x = FileReader(f, true, false, "\n").postcs;
 x = x.collect(_.collect(_.interpret));
@@ -52,8 +37,5 @@ SynthDef(\event,{ arg freq=440, amp=0.5, pan=0.0;
 	};
 }.fork;
 )
-
-//Test so everyone's eardrums don't blow out
-{ SinOsc.ar(600, 0, 0.30) * 2.7 }.play;
 
 
