@@ -1,4 +1,6 @@
-# datasets/*
+# Directories
+/datasets/
+/extra/
 
 # Editors
 .vscode/
